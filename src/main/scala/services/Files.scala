@@ -26,13 +26,4 @@ object Files {
     finally writer.close()
 
   }
-
-  def checkFolderExistence(path: String): Boolean = {
-    Paths.get(path).toAbsolutePath
-      .toFile
-      .isDirectory
-  }
-
-  def r : String => Int = s => s.length
-
 }
