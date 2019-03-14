@@ -1,2 +1,8 @@
-src/main/scala/sandbox.sc
+# IDEA
 .idea/
+*.iml
+.idea
+
+# Scala
+*.class
+src/main/scala/sandbox.sc

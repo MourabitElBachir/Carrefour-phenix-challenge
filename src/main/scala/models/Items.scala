@@ -1,9 +1,5 @@
 package models
 
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.UUID
-
 case class Item(id : Int,
                 price : Double)
 
