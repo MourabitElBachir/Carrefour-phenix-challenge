@@ -32,26 +32,26 @@ trait Computation {
     globalTurnovers
   }
 
-  def saveGlobalSales(outputPath: File, globalSales: Stream[ItemSale]): Unit = {
-    Files.makeFile(outputPath, globalSales.sorted.reverse.take(100))
+  def saveGlobalSales(nbLines: Int, outputPath: File, globalSales: Stream[ItemSale]): Unit = {
+    Files.makeFile(outputPath, globalSales.sorted.reverse.take(nbLines))
   }
 
-  def saveGlobalTurnovers(outputPath: File, globalTurnovers: Stream[Turnover]): Unit = {
-    Files.makeFile(outputPath, globalTurnovers.sorted.reverse.take(100))
+  def saveGlobalTurnovers(nbLines: Int, outputPath: File, globalTurnovers: Stream[Turnover]): Unit = {
+    Files.makeFile(outputPath, globalTurnovers.sorted.reverse.take(nbLines))
   }
 
-  def saveSalesPerShop(outputPath: UUID => File, shopsSales: Stream[SalesPerShop]): Unit = {
+  def saveSalesPerShop(nbLines: Int, outputPath: UUID => File, shopsSales: Stream[SalesPerShop]): Unit = {
     shopsSales.foreach(shopSales => {
       Files.makeFile(outputPath(shopSales.shopUUID),
-        shopSales.itemsSales.sorted.reverse.take(100)
+        shopSales.itemsSales.sorted.reverse.take(nbLines)
       )
     })
   }
 
-  def saveTurnoversPerShop(outputPath: UUID => File, shopsTurnovers: Stream[TurnoversPerShop]): Unit = {
+  def saveTurnoversPerShop(nbLines: Int, outputPath: UUID => File, shopsTurnovers: Stream[TurnoversPerShop]): Unit = {
     shopsTurnovers.foreach(shopTurnovers => {
       Files.makeFile(outputPath(shopTurnovers.shopUUID),
-        shopTurnovers.turnovers.sorted.reverse.take(100)
+        shopTurnovers.turnovers.sorted.reverse.take(nbLines)
       )
     })
   }

@@ -11,7 +11,6 @@ case class Arguments(inputFolder: File, outputFolder: File, dateChars: String, d
 
 object Arguments {
 
-
   def nextOption(map : Map[String, ArgumentOption], list: List[String]) : Map[String, ArgumentOption] = {
     list match {
       case Nil => map
@@ -51,21 +50,21 @@ object Arguments {
     if(mapOptions
       .mapValues(arg => arg.na())
       .values
-      .foldLeft(false)((a,b) => a || b)) {
+      .foldLeft(false)((a,b) => a || b) || mapOptions.size < argumentsNb) {
 
       val descSeq: ArrayBuffer[String] = ArrayBuffer[String]()
 
       mapOptions
         .values
-        .filter(x => x.na())
-        .foreach(x => descSeq.append(x.desc))
+        .filter(argOption => argOption.na())
+        .foreach(argOption => descSeq.append(argOption.desc))
 
       descSeq.append(s"You must set $argumentsNb arguments")
 
       ArgumentsDescription(descSeq, None)
 
     } else {
-
+      // To fix
       val inputFolder = mapOptions("input").file.get
       val outputFolder = mapOptions("output").file.get
       val localDate: LocalDate = mapOptions("date").dateOption.get
@@ -74,6 +73,7 @@ object Arguments {
       ArgumentsDescription(Seq("Correct arguments"), Some(Arguments(inputFolder, outputFolder, dateString, localDate)))
     }
   }
+
 
   def transactionPath(dateKey: LocalDate): Arguments => File = args => new File(args.inputFolder,
     s"${Arguments.transactionFilePrefix}${dateKey.format(Arguments.formatter)}${Arguments.extension}")
@@ -103,10 +103,6 @@ object Arguments {
     s"${Arguments.turnoverTop100Prefix}${shopUUID.toString}${Arguments.filenameSeparator}${args.dateChars}${Arguments.periodIndex }${Arguments.extension}")
 
 
-  def join(dir: File, parts: String*): File = { // filesNames : WrappedArray
-    new File(dir, parts.mkString(File.separator))
-  }
-
   val ventesGlobalTop100Prefix: String = "top_100_ventes_GLOBAL_"
   val ventesTop100Prefix: String = "top_100_ventes_"
   val turnoverGlobalTop100Prefix: String = "top_100_ca_GLOBAL_"
@@ -117,7 +113,8 @@ object Arguments {
   val filenameSeparator: String = "_"
   val periodIndex: String = "-J7"
   val previousDays: Range = 1 to 6
-  val argumentsNb = 3
+  val argumentsNb: Int = 3
+  val nbDescLines: Int = 100
 
   val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd")
 }

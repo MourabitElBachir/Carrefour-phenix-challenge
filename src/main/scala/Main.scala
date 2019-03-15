@@ -13,7 +13,6 @@ object Main extends App {
   Arguments.parse(args) match {
     case ArgumentsDescription(_, Some(arguments)) =>
       MainComputation.launchCalculation(arguments)
-      LOGGER.info("Check your output folder for results")
 
     case ArgumentsDescription(descriptions, None) =>
       descriptions.foreach(
@@ -21,9 +20,3 @@ object Main extends App {
     )
   }
 }
-
-// Reste :
-
-// 1- Tests Unitaires
-// 2- Tester si le dossier data est vide
-// 3- ItemSale => Item

@@ -24,7 +24,7 @@ class FilesTest extends FunSuite {
   test("Files.getListOfFiles") {
 
     assert(Files.getListOfFiles(
-      new File("data", "data_test"),
+      new File("data_test"),
       List("transactions"),
       List("20170514.data")
     ) == Stream(
@@ -35,7 +35,7 @@ class FilesTest extends FunSuite {
         ).mkString(File.separator))))
 
     assert(Files.getListOfFiles(
-      new File("data", "data_test"),
+      new File("data_test"),
       List("transactions"),
       List("20170513.data")
     ).isEmpty)

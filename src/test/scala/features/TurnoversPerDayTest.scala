@@ -1,0 +1,5 @@
+package features
+
+class TurnoversPerDayTest {
+
+}
