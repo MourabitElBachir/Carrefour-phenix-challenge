@@ -34,7 +34,7 @@ object TurnoverPerWeek extends Computation {
         (shopUUID, itemID, turnover)
 
       })
-      .groupBy(calculationResult => calculationResult._1)
+      .groupBy(result => result._1)
       .map(turnovers => TurnoversPerShop(turnovers._1, turnovers._2.map(turnover => Turnover(turnover._2, turnover._3))))
       .toStream
 

@@ -6,8 +6,7 @@ import models._
 
 object SalesPerWeek extends Computation {
 
-  def computePerShop(arguments: Arguments,
-                     transactionsByDates: Stream[(LocalDate, Stream[Transaction])],
+  def computePerShop(transactionsByDates: Stream[(LocalDate, Stream[Transaction])],
                      dayTransaction: Stream[SalesPerShop]): Stream[SalesPerShop] = {
 
     val shopsSales: Stream[SalesPerShop] = transactionsByDates
@@ -27,8 +26,11 @@ object SalesPerWeek extends Computation {
 
         (shopUUID, itemID, quantity)
       })
-      .groupBy(calculationResult => calculationResult._1)
-      .map(salesPerShop => SalesPerShop(salesPerShop._1, salesPerShop._2.map(itemSale => ItemSalePerShop(itemSale._1, itemSale._2, itemSale._3))))
+      .groupBy(result => result._1)
+      .map(salesPerShop => SalesPerShop(
+        salesPerShop._1,
+        salesPerShop._2.map(itemSale => ItemSalePerShop(itemSale._1, itemSale._2, itemSale._3))
+      ))
       .toStream
 
     allShopsSales

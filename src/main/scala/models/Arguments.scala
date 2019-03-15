@@ -5,6 +5,8 @@ import java.time.LocalDate
 import java.time.format.{DateTimeFormatter, DateTimeParseException}
 import java.util.UUID
 
+import services.Files
+
 import scala.collection.mutable.ArrayBuffer
 
 case class Arguments(inputFolder: File, outputFolder: File, dateChars: String, date: LocalDate)
@@ -41,25 +43,28 @@ object Arguments {
     }
   }
 
-
   // Use Some here instead of Exceptions
   def parse(args: Array[String]): ArgumentsDescription = {
 
     val mapOptions = nextOption(Map(), args.toList)
-
-    if(mapOptions
+    val naVerification = mapOptions
       .mapValues(arg => arg.na())
       .values
-      .foldLeft(false)((a,b) => a || b) || mapOptions.size < argumentsNb) {
+      .foldLeft(false)((a,b) => a || b)
+
+    if(naVerification || mapOptions.size < argumentsNb) {
 
       val descSeq: ArrayBuffer[String] = ArrayBuffer[String]()
 
-      mapOptions
-        .values
-        .filter(argOption => argOption.na())
-        .foreach(argOption => descSeq.append(argOption.desc))
-
-      descSeq.append(s"You must set $argumentsNb arguments")
+      if(naVerification) {
+        mapOptions
+          .values
+          .filter(argOption => argOption.na())
+          .foreach(argOption => descSeq.append(argOption.desc))
+      }
+      if(mapOptions.size < argumentsNb){
+        descSeq.append(s"You must set $argumentsNb arguments | Ex: -i inputDir -o outputDir -d 20170514")
+      }
 
       ArgumentsDescription(descSeq, None)
 
@@ -74,6 +79,11 @@ object Arguments {
     }
   }
 
+  def referencesFilesByDate: Arguments => Stream[File] = args => Files.getListOfFiles(
+    args.inputFolder,
+    List(Arguments.referencesFilePrefix),
+    List(args.dateChars + Arguments.extension) //References of a specific date
+  )
 
   def transactionPath(dateKey: LocalDate): Arguments => File = args => new File(args.inputFolder,
     s"${Arguments.transactionFilePrefix}${dateKey.format(Arguments.formatter)}${Arguments.extension}")

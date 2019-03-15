@@ -23,10 +23,6 @@ class ArgumentsTest extends FunSuite {
 
     val resultMap = nextOption(Map(), args.toList)
 
-    println(expectedMap)
-
-    println(resultMap)
-
     assert(resultMap === expectedMap)
   }
 

@@ -47,7 +47,6 @@ object MainComputation {
       if(transactionsByDates.nonEmpty) {
 
         val salesPerShopsByDates: Stream[SalesPerShop] = SalesPerWeek.computePerShop(
-          arguments,
           transactionsByDates,
           salesPerShops
         )

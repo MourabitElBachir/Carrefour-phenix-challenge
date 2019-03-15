@@ -1,5 +1,7 @@
 package features
 
-class TurnoversPerWeekTest {
+import org.scalatest.FunSuite
+
+class TurnoversPerWeekTest extends FunSuite {
 
 }

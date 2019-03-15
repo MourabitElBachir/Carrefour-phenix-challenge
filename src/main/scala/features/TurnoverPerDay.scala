@@ -12,11 +12,9 @@ object TurnoverPerDay extends Computation {
   def computePerShop(arguments: Arguments, transactions: Stream[Transaction]): Stream[TurnoversPerShop] = {
 
     // Get and verify the existence of references files
-    val refenrencesFiles: Stream[File] = Files.getListOfFiles(
-      arguments.inputFolder,
-      List(Arguments.referencesFilePrefix),
-      List(arguments.dateChars + Arguments.extension) //References of a specific date
-    )
+    val refenrencesFiles: Stream[File] = Arguments.referencesFilesByDate(arguments) //References of a specific date
+
+
 
     // Get items by shopUUID using references files
     val referencesStreams: Stream[(UUID, Stream[Item])] = refenrencesFiles

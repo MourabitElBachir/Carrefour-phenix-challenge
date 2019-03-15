@@ -13,7 +13,7 @@ class TransactionTest extends FunSuite {
   test("Simple item creation") {
 
     val expected = Some(Transaction(1,
-      LocalDate.parse("20170514T223544+0100", formatter),
+      LocalDate.parse("20170514", formatter),
       UUID.fromString("2a4b6b81-5aa2-4ad8-8ba9-ae1a006e7d71"),
       531,
       5)
