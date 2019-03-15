@@ -3,9 +3,8 @@ package features
 import java.time.LocalDate
 
 import models._
-import services.{Files, RegExp}
 
-object SalesPerWeek extends Calculation { // Heritage required
+object SalesPerWeek extends Computation {
 
   def computePerShop(arguments: Arguments,
                      transactionsByDates: Stream[(LocalDate, Stream[Transaction])],
@@ -16,7 +15,7 @@ object SalesPerWeek extends Calculation { // Heritage required
         .computePerShop(transactionsByDate._2))
       .append(dayTransaction)
 
-    val allShopsSales = shopsSales.flatMap(shopSales => shopSales.itemsSales
+    val allShopsSales: Stream[SalesPerShop] = shopsSales.flatMap(shopSales => shopSales.itemsSales
       .groupBy(itemSale => (itemSale.shopUUID, itemSale.id))
       .mapValues(sales => {
         sales.foldLeft(0)((acc, itemSale2) => acc + itemSale2.quantity)
@@ -33,42 +32,6 @@ object SalesPerWeek extends Calculation { // Heritage required
       .toStream
 
     allShopsSales
-  }
-
-
-  def saveGlobalSales(arguments: Arguments, globalSales: Stream[ItemSale]): Unit = {
-
-    Files.makeFile(
-      Arguments.join(
-        arguments.outputFolder,
-        Arguments.ventesGlobalTop100Prefix +
-          arguments.dateChars +
-          Arguments.periodIndex +
-          Arguments.extension
-      ),
-      globalSales.sorted.reverse.take(100)
-    )
-
-  }
-
-  def saveSalesPerShop(arguments: Arguments, shopsSales: Stream[SalesPerShop]): Unit = {
-
-    shopsSales.foreach(shopSales => {
-
-      Files.makeFile(
-        Arguments.join(
-          arguments.outputFolder,
-          Arguments.ventesTop100Prefix +
-            shopSales.shopUUID.toString +
-            Arguments.filenameSeparator +
-            arguments.dateChars +
-            Arguments.periodIndex +
-            Arguments.extension
-        ),
-        shopSales.itemsSales.sorted.reverse.take(100)
-      )
-
-    })
   }
 
 }

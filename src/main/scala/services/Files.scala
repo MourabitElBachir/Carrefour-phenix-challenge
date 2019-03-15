@@ -1,7 +1,6 @@
 package services
 
 import java.io.{File, PrintWriter}
-import java.nio.file.Paths
 
 
 object Files {
@@ -18,7 +17,6 @@ object Files {
   }
 
   def makeFile[A](file: File, stream: Stream[A]): Unit = {
-
     val writer = new PrintWriter(file)
     try {
       stream.foreach(element => writer.write(element.toString))

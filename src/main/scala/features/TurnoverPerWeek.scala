@@ -3,10 +3,8 @@ package features
 import java.time.LocalDate
 
 import models._
-import services.Files
 
-
-object TurnoverPerWeek extends Calculation {
+object TurnoverPerWeek extends Computation {
 
   def computePerShop(arguments: Arguments,
                      transactionsByDates: Stream[(LocalDate, Stream[Transaction])],
@@ -20,7 +18,7 @@ object TurnoverPerWeek extends Calculation {
       ).append(dayShopsTurnovers)
 
     // Result Aggregation :
-    val allShopsTurnovers = shopsTurnovers
+    val allShopsTurnovers: Stream[TurnoversPerShop] = shopsTurnovers
       .flatMap(shopTurnover => shopTurnover.turnovers
         .map(turnover => (shopTurnover.shopUUID, turnover.itemID, turnover.turnover)))
       .groupBy(turnover => (turnover._1, turnover._2))
@@ -42,39 +40,4 @@ object TurnoverPerWeek extends Calculation {
 
     allShopsTurnovers
   }
-
-  def saveGlobalTurnovers(arguments: Arguments, globalTurnovers: Stream[Turnover]): Unit = {
-
-    Files.makeFile(
-      Arguments.join(
-        arguments.outputFolder,
-        Arguments.turnoverGlobalTop100Prefix +
-          arguments.dateChars +
-          Arguments.periodIndex +
-          Arguments.extension
-      ),
-      globalTurnovers.sorted.reverse.take(100)
-    )
-  }
-
-  def saveTurnoversPerShop(arguments: Arguments, turnoversPerShop: Stream[TurnoversPerShop]): Unit = {
-
-    turnoversPerShop.foreach(shopTurnovers => {
-
-      Files.makeFile(
-        Arguments.join(
-          arguments.outputFolder,
-          Arguments.turnoverTop100Prefix +
-            shopTurnovers.shopUUID.toString +
-            Arguments.filenameSeparator +
-            arguments.dateChars +
-            Arguments.periodIndex +
-            Arguments.extension
-        ),
-        shopTurnovers.turnovers.sorted.reverse.take(100)
-      )
-
-    })
-  }
-
 }

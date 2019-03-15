@@ -1,34 +1,37 @@
 package features
 
+import java.io.File
 import java.util.UUID
 
 import models._
 import services.{Files, RegExp}
 
 
-object TurnoverPerDay extends Calculation {
+object TurnoverPerDay extends Computation {
 
   def computePerShop(arguments: Arguments, transactions: Stream[Transaction]): Stream[TurnoversPerShop] = {
 
     // Get and verify the existence of references files
-    val refenrencesFiles = Files.getListOfFiles(
+    val refenrencesFiles: Stream[File] = Files.getListOfFiles(
       arguments.inputFolder,
-      List("reference_prod"),
+      List(Arguments.referencesFilePrefix),
       List(arguments.dateChars + Arguments.extension) //References of a specific date
     )
 
-    val referencesStreams: Stream[(UUID, Stream[Item])] = refenrencesFiles.map( // Test fileSrc
-      fileSrc => (UUID.fromString(RegExp.matchExp(RegExp.patternReferences, fileSrc.getName)),
-        io.Source.fromFile(fileSrc).getLines
-          .flatMap(line => Item.parse(line))
-          .toStream)
-    )
+    // Get items by shopUUID using references files
+    val referencesStreams: Stream[(UUID, Stream[Item])] = refenrencesFiles
+      .map(fileSrc => (fileSrc, RegExp.matchExp(RegExp.patternReferences, fileSrc.getName)))
+      .filter(_._2.nonEmpty)
+      .map(
+        fileTuple => (UUID.fromString(fileTuple._2),
+          io.Source.fromFile(fileTuple._1).getLines
+            .flatMap(line => Item.parse(line))
+            .toStream)
+      )
 
-    val turnoversPerShop = transactions
+    val turnoversPerShop: Stream[TurnoversPerShop] = transactions
       .groupBy(transaction => (transaction.shopUUID, transaction.itemID))
-      .mapValues(transactions => {
-        transactions.foldLeft(0)((acc, transaction2) => acc + transaction2.quantity)
-      })
+      .mapValues(transactions => transactions.foldLeft(0)((acc, transaction2) => acc + transaction2.quantity))
       .toStream
       .map(transactionMap => {
         val itemID = transactionMap._1._2
@@ -57,37 +60,4 @@ object TurnoverPerDay extends Calculation {
       case None => 0.0
     }
   }
-
-  def saveGlobalTurnovers(arguments: Arguments, globalTurnovers: Stream[Turnover]): Unit = {
-
-    Files.makeFile(
-      Arguments.join(
-        arguments.outputFolder,
-        Arguments.turnoverGlobalTop100Prefix +
-          arguments.dateChars +
-          Arguments.extension
-      ),
-      globalTurnovers.sorted.reverse.take(100)
-    )
-  }
-
-  def saveTurnoversPerShop(arguments: Arguments, turnoversPerShop: Stream[TurnoversPerShop]): Unit = {
-
-    turnoversPerShop.foreach(shopTurnovers => {
-
-      Files.makeFile(
-        Arguments.join(
-          arguments.outputFolder,
-          Arguments.turnoverTop100Prefix +
-            shopTurnovers.shopUUID.toString +
-            Arguments.filenameSeparator +
-            arguments.dateChars +
-            Arguments.extension
-        ),
-        shopTurnovers.turnovers.sorted.reverse.take(100)
-      )
-
-    })
-  }
-
 }
