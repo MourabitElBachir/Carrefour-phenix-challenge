@@ -50,15 +50,16 @@ Le programme permet d'avoir la traçabilité sur les données pendant l'éxecuti
 
  <b>.jvmopts :</b> Un fichier permettant de spécifier une valeur maximale pour la consommation de la RAM. Pour ce projet c'est : 512 Mo. 
  
-
-## 3- Utiliser le projet avec SBT
-
-### Prérequis
+ 
+### 3-Prérequis
 
  - Java 8 au minimum
  - Sbt version : 1.2.8
  - Scala version : 2.12.8
  
+
+## 4- Utiliser le projet avec SBT
+
 
 ### Lancer les tests
 ```
@@ -74,7 +75,7 @@ sbt "run -i data -o output -d 20170514"
 <b>-o:</b> option pour le chemin des données de sortie 
 <b>-d:</b> date du jour
 
-## 4- Utiliser le projet avec un JAR
+## 5- Utiliser le projet avec un JAR
 ```
 scala release/Carrefour-phenix-challenge-production.jar -i data -o output -d 20170514
 ```
