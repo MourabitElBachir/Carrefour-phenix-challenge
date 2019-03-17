@@ -40,5 +40,9 @@ Le résultat du programme sont les fichiers :
 sbt run -i data -o output -d 20170514 
 ```
 
+## 2- Utiliser le projet avec un JAR
+```
+scala release/Carrefour-phenix-challenge-production.jar
+```
 
 
