@@ -34,6 +34,23 @@ Le résultat du programme sont les fichiers :
 
 ## 2- Description de la solution
 
+#### Programme
+
+Le programme permet d'avoir la traçabilité sur les données pendant l'éxecution. Si on a par exemple une transaction datée le 14/05/2017 avec des transactions relatives aux deux derniers jours, le programme va calculer la formule J7 sur ces jours en affichant à l'utilisateur que les transactions relatives qui restent sont manquantes.
+
+#### Modèles de données - Classes principales
+
+- Classe Transaction :
+- Classe Item :
+- Classe ItemSale :
+- Classe Turnover :
+
+
+#### Optimisation de la RAM
+
+ .jvmopts : Un fichier permettant de spécifier une valeur maximale pour la consommation de la RAM. Pour ce projet c'est : 512 Mo. 
+ 
+
 ## 3- Utiliser le projet avec SBT
 
 ### Prérequis
@@ -56,7 +73,10 @@ sbt "run -i data -o output -d 20170514"
 
 ## 4- Utiliser le projet avec un JAR
 ```
-scala release/Carrefour-phenix-challenge-production.jar
+scala release/Carrefour-phenix-challenge-production.jar -i data -o output -d 20170514
 ```
+
+## 5- Cas d'ulisation du programme
+
 
 
