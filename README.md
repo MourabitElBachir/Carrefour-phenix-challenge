@@ -21,6 +21,8 @@ Le résultat du programme sont les fichiers :
 7. `top_100_ca_<ID_MAGASIN>_YYYYMMDD-J7.data`
 8. `top_100_ca_GLOBAL_YYYYMMDD-J7.data`
 
+
+
 ## 2- Utiliser le projet avec SBT
 
 ### Prérequis
@@ -40,7 +42,9 @@ Le résultat du programme sont les fichiers :
 sbt run -i data -o output -d 20170514 
 ```
 
-## 2- Utiliser le projet avec un JAR
+
+
+## 3- Utiliser le projet avec un JAR
 ```
 scala release/Carrefour-phenix-challenge-production.jar
 ```
