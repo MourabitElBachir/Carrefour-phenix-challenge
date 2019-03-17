@@ -110,7 +110,7 @@ class TurnoversPerDayTest extends FunSuite {
     assert(expectedPrice === resultPrice)
   }
 
-  test("Day-Turnover: getItemPrice Test - When price not found") {
+  test("Day-Turnover: getItemPrice Test - Item id not found ") {
 
     val expectedPrice = 0.0
 
@@ -131,6 +131,31 @@ class TurnoversPerDayTest extends FunSuite {
     )
 
     val resultPrice = TurnoverPerDay.getItemPrice(755, UUID.fromString("2a4b6b81-5aa2-4ad8-8ba9-ae1a006e7d71"), referencesStreams)
+
+    assert(expectedPrice === resultPrice)
+  }
+
+  test("Day-Turnover: getItemPrice Test - ShopUUID  not found ") {
+
+    val expectedPrice = 0.0
+
+    val referencesStreams: Stream[(UUID, Stream[Item])] = Stream(
+      (UUID.fromString("2a4b6b81-5aa2-4ad8-8ba9-ae1a006e7d71"),
+        Stream(
+          Item(531, 11.15),
+          Item(17, 22.23),
+          Item(600, 67.23)
+        )
+      )
+      ,
+      (UUID.fromString("dd43720c-be43-41b6-bc4a-ac4beabd0d9b"),
+        Stream(Item(600, 25.44),
+          Item(88, 34.29),
+          Item(531, 45.23))
+      )
+    )
+
+    val resultPrice = TurnoverPerDay.getItemPrice(755, UUID.fromString("5b4b6b81-5aa2-4ad8-8ba9-ae1a006e7d71"), referencesStreams)
 
     assert(expectedPrice === resultPrice)
   }
