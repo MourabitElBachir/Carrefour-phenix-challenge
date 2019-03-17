@@ -1,8 +1,10 @@
 package models
 
+// References files line container
 case class Item(id: Int,
                 price: Double)
 
+// Item: is
 object Item {
 
   val delimiter: String = """\|"""

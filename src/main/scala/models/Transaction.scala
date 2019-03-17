@@ -4,13 +4,14 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.UUID
 
-
+// Input Transaction
 case class Transaction(txID: Int,
                        date: LocalDate,
                        shopUUID: UUID,
                        itemID: Int,
                        quantity: Int)
 
+// Transaction Parsing - All use cases covered
 object Transaction {
 
   val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmssZ")

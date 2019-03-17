@@ -38,7 +38,7 @@ class ItemsTest extends FunSuite {
 
     val expected = Some(Item(10, 30.86))
 
-    val itemResult = Transaction
+    val itemResult = Item
       .parse("10|30.86|a|b|c|d|e")
 
     assert(itemResult === expected)
