@@ -21,7 +21,15 @@ Le résultat du programme sont les fichiers :
 7. `top_100_ca_<ID_MAGASIN>_YYYYMMDD-J7.data`
 8. `top_100_ca_GLOBAL_YYYYMMDD-J7.data`
 
+#### Contraintes: selon [Carrefour Group Phenix Team](https://github.com/Carrefour-Group/phenix-challenge)
 
+- 2 cpu 
+- 512M ram 
+- efficacité (temps d'exécution % ressources consommées)
+- nombre de produits en constante évolution
+- nombre de transactions en grande évolution
+- pas de backend (base de données, Hadoop, Spark, Kafka, etc.)
+- languages: Scala, Java, Bash, Go
 
 ## 2- Utiliser le projet avec SBT
 
