@@ -36,7 +36,7 @@ Le résultat du programme sont les fichiers :
 
 #### Programme
 
-Le programme permet d'avoir la traçabilité sur les données pendant l'éxecution. Si on a par exemple une transaction datée le 14/05/2017 avec des transactions relatives aux deux derniers jours, le programme va calculer la formule J7 sur ces jours en affichant à l'utilisateur que les autres transactions sont manquantes.
+Le programme permet d'avoir la traçabilité sur les données pendant l'éxecution. Si on a par exemple une transaction datée le 14/05/2017 avec juste des transactions relatives aux deux derniers jours, le programme va calculer la formule J7 sur ces jours en affichant à l'utilisateur que les autres transactions sont manquantes.
 
 #### Modèles de données - Classes principales
 
