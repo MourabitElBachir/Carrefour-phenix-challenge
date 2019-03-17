@@ -82,7 +82,8 @@ object Arguments {
           desc2,
           desc3,
           desc4,
-          s"$argumentsNb arguments required to run program | Example : -i inputFolder -o outputFolder -d 20170514"),
+          s"$argumentsNb arguments required to run program | Example : -i inputFolder -o outputFolder -d 20170514")
+        .filter(desc => desc.nonEmpty),
         None)
     }
   }

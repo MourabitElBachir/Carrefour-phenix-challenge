@@ -16,7 +16,7 @@ object Main extends App {
 
     case ArgumentsDescription(descriptions, None) =>
       descriptions.foreach(
-        description => if (description.nonEmpty) LOGGER.log(Level.SEVERE, description)
+        description => LOGGER.log(Level.SEVERE, description)
       )
   }
 }
