@@ -5,7 +5,7 @@
 
 ### 1- Objectif du projet 
 
-Le principe est de collecter les transactions de tous les magasins à partir d'un fichier "transaction_date-d-un-jour.data", ainsi que les prix de produits par magasin à partir des fichiers referentiels collectés par magasin.
+Le principe est de récuperer les transactions de tous les magasins à partir d'un fichier "transaction_date-d-un-jour.data", ainsi que les prix de produits par magasin à partir des fichiers referentiels collectés par magasin.
 
   - les transactions : `transactions_YYYYMMDD.data`
   - les référentiels : `reference_prod-ID_MAGASIN_YYYYMMDD.data` où ID_MAGASIN est un UUID identifiant le magasin.
