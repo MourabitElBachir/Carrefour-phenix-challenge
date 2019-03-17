@@ -1,31 +1,14 @@
 package features
 
-import java.io.File
 import java.util.UUID
 
 import models._
-import services.{Files, RegExp}
 
 
-object TurnoverPerDay extends Computation {
+object TurnoverPerDay extends TurnoversComputation {
 
-  def computePerShop(arguments: Arguments, transactions: Stream[Transaction]): Stream[TurnoversPerShop] = {
-
-    // Get and verify the existence of references files
-    val refenrencesFiles: Stream[File] = Arguments.referencesFilesByDate(arguments) //References of a specific date
-
-
-
-    // Get items by shopUUID using references files
-    val referencesStreams: Stream[(UUID, Stream[Item])] = refenrencesFiles
-      .map(fileSrc => (fileSrc, RegExp.matchExp(RegExp.patternReferences, fileSrc.getName)))
-      .filter(_._2.nonEmpty)
-      .map(
-        fileTuple => (UUID.fromString(fileTuple._2),
-          io.Source.fromFile(fileTuple._1).getLines
-            .flatMap(line => Item.parse(line))
-            .toStream)
-      )
+  def computePerShop(transactions: Stream[Transaction],
+                     referencesStreams: Stream[(UUID, Stream[Item])]): Stream[TurnoversPerShop] = {
 
     val turnoversPerShop: Stream[TurnoversPerShop] = transactions
       .groupBy(transaction => (transaction.shopUUID, transaction.itemID))

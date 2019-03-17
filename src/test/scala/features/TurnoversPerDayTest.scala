@@ -1,17 +1,14 @@
 package features
 
-import java.io.File
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.UUID
 
-import java.nio.file
-
 import models._
 import org.scalatest.FunSuite
-import services.Files
 
-class TurnoversPerDayTest  extends FunSuite {
+
+class TurnoversPerDayTest extends FunSuite {
 
   private val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd")
 
@@ -63,34 +60,27 @@ class TurnoversPerDayTest  extends FunSuite {
         8)
     )
 
-    file.Files.createTempDirectory("tmp")
-    Files.makeFile(new File("tmp", "reference_prod-2a4b6b81-5aa2-4ad8-8ba9-ae1a006e7d71_20170514.data"),
-      Stream(
-        Turnover(531, 11.15),
-        Turnover(17, 22.23)
+    val referencesStreams: Stream[(UUID, Stream[Item])] = Stream(
+      (UUID.fromString("2a4b6b81-5aa2-4ad8-8ba9-ae1a006e7d71"),
+        Stream(
+          Item(531, 11.15),
+          Item(17, 22.23)
+        )
+      )
+      ,
+      (UUID.fromString("dd43720c-be43-41b6-bc4a-ac4beabd0d9b"),
+        Stream(Item(600, 25.44),
+          Item(88, 34.29))
       )
     )
 
-    file.Files.createTempDirectory("tmp")
-    Files.makeFile(new File("tmp", "reference_prod-dd43720c-be43-41b6-bc4a-ac4beabd0d9b_20170514.data"),
-      Stream(
-        Turnover(600, 25.44),
-        Turnover(88, 34.29)
-      )
-    )
 
     val result: List[(UUID, List[Turnover])] = TurnoverPerDay.computePerShop(
-      Arguments(
-        new File("tmp"),
-        null, "20170514",
-        LocalDate.parse("20170514", formatter)
-      ),
-      transactions)
+      transactions,
+      referencesStreams)
       .map(element => (element.shopUUID, element.turnovers.toList))
       .toList
 
-
     assert(expected === result)
   }
-
 }

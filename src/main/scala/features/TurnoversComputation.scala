@@ -3,22 +3,10 @@ package features
 import java.io.File
 import java.util.UUID
 
-import models._
+import models.{Turnover, TurnoversPerShop}
 import services.Files
 
-trait Computation {
-
-  def computeGlobalSales(shopsSales: Stream[SalesPerShop]): Stream[ItemSale] = {
-
-    val globalSales: Stream[ItemSale] = shopsSales
-      .flatMap(shopSales => shopSales.itemsSales)
-      .groupBy(itemSale => itemSale.id)
-      .mapValues(transaction => transaction.foldLeft(0)((acc, transaction2) => acc + transaction2.quantity))
-      .toStream
-      .map(result => ItemSale(result._1, result._2))
-
-    globalSales
-  }
+trait TurnoversComputation {
 
   def computeGlobalTurnovers(turnoversPerShop: Stream[TurnoversPerShop]): Stream[Turnover] = {
 
@@ -32,20 +20,8 @@ trait Computation {
     globalTurnovers
   }
 
-  def saveGlobalSales(nbLines: Int, outputPath: File, globalSales: Stream[ItemSale]): Unit = {
-    Files.makeFile(outputPath, globalSales.sorted.reverse.take(nbLines))
-  }
-
   def saveGlobalTurnovers(nbLines: Int, outputPath: File, globalTurnovers: Stream[Turnover]): Unit = {
     Files.makeFile(outputPath, globalTurnovers.sorted.reverse.take(nbLines))
-  }
-
-  def saveSalesPerShop(nbLines: Int, outputPath: UUID => File, shopsSales: Stream[SalesPerShop]): Unit = {
-    shopsSales.foreach(shopSales => {
-      Files.makeFile(outputPath(shopSales.shopUUID),
-        shopSales.itemsSales.sorted.reverse.take(nbLines)
-      )
-    })
   }
 
   def saveTurnoversPerShop(nbLines: Int, outputPath: UUID => File, shopsTurnovers: Stream[TurnoversPerShop]): Unit = {

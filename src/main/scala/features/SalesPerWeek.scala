@@ -4,7 +4,7 @@ import java.time.LocalDate
 
 import models._
 
-object SalesPerWeek extends Computation {
+object SalesPerWeek extends SalesComputation {
 
   def computePerShop(transactionsByDates: Stream[(LocalDate, Stream[Transaction])],
                      dayTransaction: Stream[SalesPerShop]): Stream[SalesPerShop] = {

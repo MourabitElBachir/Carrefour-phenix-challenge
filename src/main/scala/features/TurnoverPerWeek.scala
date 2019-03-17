@@ -1,20 +1,23 @@
 package features
 
 import java.time.LocalDate
+import java.util.UUID
 
 import models._
 
-object TurnoverPerWeek extends Computation {
+object TurnoverPerWeek extends TurnoversComputation {
 
-  def computePerShop(arguments: Arguments,
-                     transactionsByDates: Stream[(LocalDate, Stream[Transaction])],
-                     dayShopsTurnovers: Stream[TurnoversPerShop]): Stream[TurnoversPerShop] = {
+  def computePerShop(transactionsByDates: Stream[(LocalDate, Stream[Transaction])],
+                     dayShopsTurnovers: Stream[TurnoversPerShop],
+                     referencesStreams: Stream[(LocalDate, Stream[(UUID, Stream[Item])])]): Stream[TurnoversPerShop] = {
 
     // Price calculation :
     val shopsTurnovers: Stream[TurnoversPerShop] = transactionsByDates
       .flatMap(dateTransactions => TurnoverPerDay.computePerShop(
-        arguments.copy(dateChars = dateTransactions._1.format(Arguments.formatter), date = dateTransactions._1),
-        dateTransactions._2)
+        dateTransactions._2,
+        referencesStreams
+          .filter(referencesForDate => referencesForDate._1 == dateTransactions._1)
+          .flatMap(references => references._2))
       ).append(dayShopsTurnovers)
 
     // Result Aggregation :

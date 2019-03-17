@@ -10,9 +10,7 @@ case class ArgumentsDescription(description: Seq[String], argOption: Option[Argu
 case class ArgumentOption(desc: String,
                           file: Option[File],
                           dateStringOption: Option[String],
-                          dateOption: Option[LocalDate])
-{
+                          dateOption: Option[LocalDate]){
 
-  def na(): Boolean = file.isEmpty && dateStringOption.isEmpty && dateOption.isEmpty
-
+  def empty(): Boolean = file.isEmpty && dateStringOption.isEmpty && dateOption.isEmpty
 }

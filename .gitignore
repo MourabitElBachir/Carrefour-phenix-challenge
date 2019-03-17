@@ -1,7 +1,6 @@
 # IDEA
 .idea/
 *.iml
-.idea
 
 # Scala
 *.class

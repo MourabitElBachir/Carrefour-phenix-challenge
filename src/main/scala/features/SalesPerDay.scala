@@ -3,7 +3,7 @@ package features
 import models._
 
 
-object SalesPerDay extends Computation {
+object SalesPerDay extends SalesComputation {
 
   def computePerShop(transactions: Stream[Transaction]): Stream[SalesPerShop] = {
 

@@ -5,8 +5,8 @@ import java.io.{File, PrintWriter}
 
 object Files {
 
-  def filterMatching(matchFirst: List[String], matchLast: List[String]): File =>
-    Boolean = file => matchFirst.exists(file.getName.startsWith(_)) && matchLast.exists(file.getName.endsWith(_))
+  def filterMatching(matchFirst: List[String], matchLast: List[String]): File => Boolean = file =>
+    matchFirst.exists(file.getName.startsWith(_)) && matchLast.exists(file.getName.endsWith(_))
 
   def getListOfFiles(dir: File, matchFirst: List[String], matchLast: List[String]): Stream[File] = {
     if (dir.exists && dir.isDirectory) {

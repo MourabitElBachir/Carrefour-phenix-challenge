@@ -1,9 +1,12 @@
 package features
 
+import java.io.File
 import java.time.LocalDate
+import java.util.UUID
 import java.util.logging.Logger
 
 import models._
+import services.RegExp
 
 import scala.io.Source
 
@@ -31,7 +34,10 @@ object MainComputation {
       val globalSales: Stream[ItemSale] = SalesPerDay.computeGlobalSales(salesPerShops)
       SalesPerDay.saveGlobalSales(Arguments.nbDescLines, Arguments.dayGlobalSalesPath(arguments), globalSales)
 
-      val turnoversPerShops: Stream[TurnoversPerShop] = TurnoverPerDay.computePerShop(arguments, transactionsObjects)
+      val turnoversPerShops: Stream[TurnoversPerShop] = TurnoverPerDay.computePerShop(
+        transactionsObjects,
+        checkAndCreateReferences(arguments, arguments.date)._2)
+
       TurnoverPerDay.saveTurnoversPerShop(Arguments.nbDescLines, Arguments.dayTurnoversPerShopPath(arguments), turnoversPerShops)
 
       val globalTurnovers: Stream[Turnover] = TurnoverPerDay.computeGlobalTurnovers(turnoversPerShops)
@@ -50,17 +56,23 @@ object MainComputation {
           transactionsByDates,
           salesPerShops
         )
-        SalesPerWeek.saveSalesPerShop(Arguments.nbDescLines, Arguments.daySalesPerShopPath(arguments), salesPerShopsByDates)
+        SalesPerWeek.saveSalesPerShop(
+          Arguments.nbDescLines,
+          Arguments.daySalesPerShopPath(arguments),
+          salesPerShopsByDates)
 
         val globalSalesByDates: Stream[ItemSale] = SalesPerWeek.computeGlobalSales(salesPerShopsByDates)
         SalesPerWeek.saveGlobalSales(Arguments.nbDescLines, Arguments.weekGlobalSalesPath(arguments), globalSalesByDates)
 
         val turnoversPerShopsByDates: Stream[TurnoversPerShop] = TurnoverPerWeek.computePerShop(
-          arguments,
           transactionsByDates,
-          turnoversPerShops
+          turnoversPerShops,
+          transactionsByDates.map(transactionByDate => checkAndCreateReferences(arguments, transactionByDate._1))
         )
-        TurnoverPerWeek.saveTurnoversPerShop(Arguments.nbDescLines, Arguments.dayTurnoversPerShopPath(arguments), turnoversPerShopsByDates)
+        TurnoverPerWeek.saveTurnoversPerShop(
+          Arguments.nbDescLines,
+          Arguments.weekTurnoversPerShopPath(arguments),
+          turnoversPerShopsByDates)
 
         val globalTurnoversByDates: Stream[Turnover] = TurnoverPerWeek.computeGlobalTurnovers(turnoversPerShopsByDates)
         TurnoverPerWeek.saveGlobalTurnovers(Arguments.nbDescLines, Arguments.weekGlobalTurnoversPath(arguments), globalTurnoversByDates)
@@ -97,4 +109,26 @@ object MainComputation {
     }
 
   }
+
+  def checkAndCreateReferences(arguments: Arguments, dateKey: LocalDate): (LocalDate, Stream[(UUID, Stream[Item])]) = {
+
+    // Get and verify the existence of references files
+    val referencesFiles: Stream[File] = Arguments.referencesFilesByDate(dateKey)(arguments) //References of a specific date
+    
+    // Get items by shopUUID using references files
+    val referencesStreams: Stream[(UUID, Stream[Item])] = referencesFiles
+      .map(fileSrc => (fileSrc, RegExp.matchExp(RegExp.patternReferences, fileSrc.getName)))
+      .filter(_._2.nonEmpty)
+      .map(
+        fileTuple => (UUID.fromString(fileTuple._2),
+          io.Source.fromFile(fileTuple._1).getLines
+            .flatMap(line => Item.parse(line))
+            .toStream)
+      )
+
+    (dateKey, referencesStreams)
+  }
+
 }
+
+
