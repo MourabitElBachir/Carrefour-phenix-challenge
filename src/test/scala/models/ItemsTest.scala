@@ -15,7 +15,7 @@ class ItemsTest extends FunSuite {
 
   test("Items with cells no supported format") {
 
-    val itemResult = Transaction
+    val itemResult = Item
       .parse("id|Date")
 
     assert(itemResult === None)
