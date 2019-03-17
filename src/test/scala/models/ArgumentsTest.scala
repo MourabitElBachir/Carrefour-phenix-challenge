@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter
 import models.Arguments.nextOption
 import org.scalatest.FunSuite
 
-import scala.collection.mutable.ArrayBuffer
 
 class ArgumentsTest extends FunSuite {
 
@@ -17,7 +16,7 @@ class ArgumentsTest extends FunSuite {
 
   test("Simple Arguments nextOption function test") {
 
-    val expectedMap = Map("input" -> ArgumentOption("Correct", Some(new File("data_test/")),None,None))
+    val expectedMap = Map("input" -> ArgumentOption("", Some(new File("data_test/")),None,None))
 
     val args = "-i data_test/".split(separator)
 
@@ -32,7 +31,8 @@ class ArgumentsTest extends FunSuite {
     val args = "-i data_test/".split(separator)
 
     val expectedArguments = ArgumentsDescription(
-      ArrayBuffer("You must set 3 arguments"),
+      List(s"${Arguments.argumentsNb} arguments required to run program" +
+            " | Example : -i inputFolder -o outputFolder -d 20170514"),
       None
     )
 
@@ -50,9 +50,10 @@ class ArgumentsTest extends FunSuite {
     val args = "-i data_test/not_found".split(separator)
 
     val expectedArguments = ArgumentsDescription(
-      ArrayBuffer(
+      List(
         "Input file not found",
-        "You must set 3 arguments"),
+        s"${Arguments.argumentsNb} arguments required to run program" +
+          " | Example : -i inputFolder -o outputFolder -d 20170514"),
       None
     )
 
@@ -93,7 +94,7 @@ class ArgumentsTest extends FunSuite {
   test("VerifyFile function test - File found") {
 
     val expectedArgumentOption = ArgumentOption(
-      "Correct",
+      "",
       Some(new File("data_test")),
       None,
       None
@@ -128,7 +129,7 @@ class ArgumentsTest extends FunSuite {
   test("Verify date test - Correct date format") {
 
     val expectedArgumentOption = ArgumentOption(
-      "Correct",
+      "",
       None,
       Some("20170514"),
       Some(
