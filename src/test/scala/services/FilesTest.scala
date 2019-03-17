@@ -29,7 +29,7 @@ class FilesTest extends FunSuite {
 
   }
 
-  test("Files.getListOfFiles test") {
+  test("Files.getListOfFiles test : Not empty") {
 
     val expectedFileExist =
       new File(
@@ -45,6 +45,9 @@ class FilesTest extends FunSuite {
 
     assert(expectedFileExist === resultFileExist)
 
+  }
+
+  test("Files.getListOfFiles test : Is empty") {
 
     val expectedDoNotExist = true
 
