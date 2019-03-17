@@ -51,7 +51,7 @@ Le programme permet d'avoir la traçabilité sur les données pendant l'éxecuti
  <b>.jvmopts :</b> Un fichier permettant de spécifier une valeur maximale pour la consommation de la RAM. Pour ce projet c'est : 512 Mo. 
  
  
-### 3-Prérequis
+## 3-Prérequis
 
  - Java 8 au minimum
  - Sbt version : 1.2.8
