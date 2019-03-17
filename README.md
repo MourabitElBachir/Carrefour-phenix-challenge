@@ -31,7 +31,9 @@ Le résultat du programme sont les fichiers :
 - pas de backend (base de données, Hadoop, Spark, Kafka, etc.)
 - languages: Scala, Java, Bash, Go
 
-## 2- Utiliser le projet avec SBT
+#### 2- Description de la solution
+
+## 3- Utiliser le projet avec SBT
 
 ### Prérequis
 
@@ -51,8 +53,7 @@ sbt "run -i data -o output -d 20170514"
 ```
 
 
-
-## 3- Utiliser le projet avec un JAR
+## 4- Utiliser le projet avec un JAR
 ```
 scala release/Carrefour-phenix-challenge-production.jar
 ```
