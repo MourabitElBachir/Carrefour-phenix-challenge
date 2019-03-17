@@ -39,7 +39,7 @@ Le résultat du programme sont les fichiers :
 
 ### Lancer le programme
 ```
-sbt run -i data -o output -d 20170514 
+sbt "run -i data -o output -d 20170514" 
 ```
 
 
