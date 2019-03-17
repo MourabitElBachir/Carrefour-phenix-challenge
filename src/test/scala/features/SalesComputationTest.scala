@@ -54,7 +54,7 @@ class SalesComputationTest extends FunSuite {
     val result: List[ItemSale] = SalesPerDay
       .computeGlobalSales(shopsSales)
       .toList
-    
+
     assert(expected === result)
   }
   
