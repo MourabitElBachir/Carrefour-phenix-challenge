@@ -41,14 +41,14 @@ Le programme permet d'avoir la traçabilité sur les données pendant l'éxecuti
 #### Modèles de données - Classes principales
 
 - <b>Classe Transaction :</b> Permet de cooncrétiser une transaction (id de la transaction, date, reference magasin, id du produit, quantité)
-- <b>Classe Item : Permet de concrétiser un produit (id du produit, prix)
+- <b>Classe Item :</b> Permet de concrétiser un produit (id du produit, prix)
 - <b>Classe ItemSale :</b> C'est une classe pour concrétiser les lignes de sortie pour un calcul de vente (id produit, somme quantités)
 - <b>Classe Turnover :</b> C'est une classe pour concrétiser les lignes de sortie pour un calcul de chiffre d'affaire (id produit, chiffre d'affaire)
 
 
 #### Optimisation de la RAM
 
- .jvmopts : Un fichier permettant de spécifier une valeur maximale pour la consommation de la RAM. Pour ce projet c'est : 512 Mo. 
+ <b>.jvmopts :</b> Un fichier permettant de spécifier une valeur maximale pour la consommation de la RAM. Pour ce projet c'est : 512 Mo. 
  
 
 ## 3- Utiliser le projet avec SBT
