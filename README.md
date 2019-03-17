@@ -4,13 +4,14 @@
 [![Coverage Status](https://coveralls.io/repos/github/MourabitElBachir/Carrefour-phenix-challenge/badge.svg?branch=master)](https://coveralls.io/github/MourabitElBachir/Carrefour-phenix-challenge?branch=master)
 
 ## Prérequis
+--------
 
  - Java 8 au minimum
  - Sbt version : 1.2.8
  - Scala version : 2.12.8
 
 ### Objectif du projet 
-
+--------
 
 Le principe est de collecter les transactions de tous les magasins à partir d'un fichier "transaction_date-d-un-jour.data", ainsi que les prix de produits par magasin à partir des fichiers referentiels collectés par magasin.
 
