@@ -31,7 +31,7 @@ object Arguments {
   def verifyFile(dirPath: String, whichFile: String): ArgumentOption =  {
     val dir = new File(dirPath)
     if (dir.isDirectory) ArgumentOption("", Some(dir), None, None)
-    else ArgumentOption(s"$whichFile file not found", None, None, None)
+    else ArgumentOption(s"$whichFile directory not found", None, None, None)
   }
 
   def verifyDate(dateString: String): ArgumentOption =  {

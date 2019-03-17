@@ -16,19 +16,22 @@ class ArgumentsTest extends FunSuite {
 
   test("Simple Arguments nextOption function test") {
 
-    val expectedMap = Map("input" -> ArgumentOption("", Some(new File("data_test/")),None,None))
+    val inputDir = new File("data_test/")
 
-    val args = "-i data_test/".split(separator)
+      val expectedMap = Map("input" -> ArgumentOption("", Some(inputDir), None, None))
 
-    val resultMap = nextOption(Map(), args.toList)
+      val args = "-i data_test".split(separator)
 
-    assert(resultMap === expectedMap)
+      val resultMap = nextOption(Map(), args.toList)
+
+      assert(resultMap === expectedMap)
+
   }
 
 
   test("Simple Arguments parse method test - must set 3 arguments") {
 
-    val args = "-i data_test/".split(separator)
+    val args = "aaaa bbbb cccc".split(separator)
 
     val expectedArguments = ArgumentsDescription(
       List(s"${Arguments.argumentsNb} arguments required to run program" +
@@ -51,7 +54,7 @@ class ArgumentsTest extends FunSuite {
 
     val expectedArguments = ArgumentsDescription(
       List(
-        "Input file not found",
+        "Input directory not found",
         s"${Arguments.argumentsNb} arguments required to run program" +
           " | Example : -i inputFolder -o outputFolder -d 20170514"),
       None
@@ -91,28 +94,28 @@ class ArgumentsTest extends FunSuite {
   }
 
 
-  test("VerifyFile function test - File found") {
+  test("VerifyFile function test - Directory found") {
 
-    val expectedArgumentOption = ArgumentOption(
+    val expected = ArgumentOption(
       "",
       Some(new File("data_test")),
       None,
       None
-    )
+    ).file.getOrElse(new File("")).isDirectory
 
-    val resultArgumentsOption = Arguments.verifyFile(
+    val result = Arguments.verifyFile(
       "data_test",
       "Input"
-    )
+    ).file.getOrElse(new File("")).isDirectory
 
-    assert(expectedArgumentOption === resultArgumentsOption)
+    assert(expected === result)
   }
 
 
-  test("VerifyFile function test - File not found") {
+  test("VerifyFile function test - Directory not found") {
 
     val expectedArgumentOption = ArgumentOption(
-      "Input file not found",
+      "Input directory not found",
       None,
       None,
       None
@@ -144,30 +147,6 @@ class ArgumentsTest extends FunSuite {
     )
 
     assert(expectedArgumentOption === resultArgumentsOption)
-  }
-
-  test("Verify date test - Incorrect date format") {
-
-    val expectedArgumentOption = ArgumentOption("Date string could not be parsed",None,None,None)
-
-    val resultArgumentsOption = Arguments.verifyDate(
-      "date"
-    )
-
-    assert(expectedArgumentOption === resultArgumentsOption)
-
-  }
-
-  test("Verify date test - Incorrect date format") {
-
-    val expectedArgumentOption = ArgumentOption("Date string could not be parsed",None,None,None)
-
-    val resultArgumentsOption = Arguments.verifyDate(
-      "date"
-    )
-
-    assert(expectedArgumentOption === resultArgumentsOption)
-
   }
 
   test("Verify date test - Incorrect date format") {
