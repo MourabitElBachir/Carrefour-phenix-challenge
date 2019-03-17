@@ -16,5 +16,3 @@ libraryDependencies ++= Seq(
   "com.concurrentthought.cla" %% "command-line-arguments" % "0.5.0",
   "com.concurrentthought.cla" %% "command-line-arguments-examples" % "0.5.0"
 )
-
-coverageExcludedPackages := ".*Main.scala;.*MainComputation.scala"

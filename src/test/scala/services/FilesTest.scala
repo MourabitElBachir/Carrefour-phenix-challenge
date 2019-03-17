@@ -7,7 +7,7 @@ import org.scalatest.FunSuite
 
 class FilesTest extends FunSuite {
 
-  test("Files.filterFiles") {
+  test("Files.filterFiles test") {
 
     val expectedTrue = true
 
@@ -29,7 +29,7 @@ class FilesTest extends FunSuite {
 
   }
 
-  test("Files.getListOfFiles test : Not empty") {
+  test("Files.getListOfFiles test: dir exist and has files") {
 
     val expectedFileExist =
       new File(
@@ -47,12 +47,26 @@ class FilesTest extends FunSuite {
 
   }
 
-  test("Files.getListOfFiles test : Is empty") {
+  test("Files.getListOfFiles test: dir exist but empty") {
+
+  val expectedDoNotExist = true
+
+  val resultFileDoNotExist = Files.getListOfFiles(
+    new File("data_test"),
+    List("transactions"),
+    List("20170513.data")
+  ).isEmpty
+
+  assert(expectedDoNotExist === resultFileDoNotExist)
+
+}
+
+  test("Files.getListOfFiles test : Directory does not exist") {
 
     val expectedDoNotExist = true
 
     val resultFileDoNotExist = Files.getListOfFiles(
-      new File("data_test"),
+      new File("not_found_dir"),
       List("transactions"),
       List("20170513.data")
     ).isEmpty
