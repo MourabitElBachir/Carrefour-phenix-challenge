@@ -7,9 +7,10 @@ import java.util.UUID
 
 import services.Files
 
-
+// Arguments class to manage user arguments
 case class Arguments(inputFolder: File, outputFolder: File, dateChars: String, date: LocalDate)
 
+// Arguments Parsing : All use cases are covered
 object Arguments {
 
   def nextOption(map : Map[String, ArgumentOption], list: List[String]) : Map[String, ArgumentOption] = {
@@ -169,6 +170,7 @@ object Arguments {
       Arguments.extension)
   )
 
+  // Arguments values :
 
   val ventesGlobalTop100Prefix: String = "top_100_ventes_GLOBAL_"
   val ventesTop100Prefix: String = "top_100_ventes_"

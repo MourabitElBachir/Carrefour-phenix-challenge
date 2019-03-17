@@ -12,7 +12,7 @@ object Main extends App {
 
   Arguments.parse(args) match {
     case ArgumentsDescription(_, Some(arguments)) =>
-      MainComputation.launchCalculation(arguments)
+      MainComputation.launchComputation(arguments)
 
     case ArgumentsDescription(descriptions, None) =>
       descriptions.foreach(

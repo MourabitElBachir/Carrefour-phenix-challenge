@@ -11,7 +11,7 @@ case class Transaction(txID: Int,
                        itemID: Int,
                        quantity: Int)
 
-// Transaction Parsing - All use cases covered
+// Transaction Parsing - All use cases are covered
 object Transaction {
 
   val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmssZ")

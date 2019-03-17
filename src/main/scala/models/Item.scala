@@ -4,7 +4,7 @@ package models
 case class Item(id: Int,
                 price: Double)
 
-// Item: is
+// Item Parsing - All use cases are covered
 object Item {
 
   val delimiter: String = """\|"""

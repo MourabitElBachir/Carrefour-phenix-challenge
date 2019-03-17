@@ -7,6 +7,7 @@ import models._
 
 object TurnoverPerDay extends TurnoversComputation {
 
+  // Turnovers by shop generation
   def computePerShop(transactions: Stream[Transaction],
                      referencesStreams: Stream[(UUID, Stream[Item])]): Stream[TurnoversPerShop] = {
 
@@ -28,6 +29,7 @@ object TurnoverPerDay extends TurnoversComputation {
     turnoversPerShop
   }
 
+  // Get item price from a stream of items's references
   def getItemPrice(itemID: Int, shopUUID: UUID, referencesStreams: Stream[(UUID, Stream[Item])]): Double = {
     referencesStreams
       .find(x => x._1 == shopUUID)

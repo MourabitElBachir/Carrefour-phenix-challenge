@@ -6,6 +6,7 @@ import models._
 
 object SalesPerWeek extends SalesComputation {
 
+  // Sales by shop generation
   def computePerShop(transactionsByDates: Stream[(LocalDate, Stream[Transaction])],
                      dayTransaction: Stream[SalesPerShop]): Stream[SalesPerShop] = {
 

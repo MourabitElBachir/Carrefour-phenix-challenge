@@ -8,6 +8,7 @@ import services.Files
 
 trait TurnoversComputation {
 
+  // Global Turnovers generation
   def computeGlobalTurnovers(turnoversPerShop: Stream[TurnoversPerShop]): Stream[Turnover] = {
 
     val globalTurnovers = turnoversPerShop

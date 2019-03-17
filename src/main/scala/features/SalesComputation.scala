@@ -8,6 +8,8 @@ import services.Files
 
 trait SalesComputation {
 
+
+  // Global Sales generation
   def computeGlobalSales(shopsSales: Stream[SalesPerShop]): Stream[ItemSale] = {
 
     val globalSales: Stream[ItemSale] = shopsSales

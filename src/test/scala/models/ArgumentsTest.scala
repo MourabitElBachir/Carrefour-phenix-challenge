@@ -158,4 +158,28 @@ class ArgumentsTest extends FunSuite {
 
   }
 
+  test("Verify date test - Incorrect date format") {
+
+    val expectedArgumentOption = ArgumentOption("Date string could not be parsed",None,None,None)
+
+    val resultArgumentsOption = Arguments.verifyDate(
+      "date"
+    )
+
+    assert(expectedArgumentOption === resultArgumentsOption)
+
+  }
+
+  test("Verify date test - Incorrect date format") {
+
+    val expectedArgumentOption = ArgumentOption("Date string could not be parsed",None,None,None)
+
+    val resultArgumentsOption = Arguments.verifyDate(
+      "date"
+    )
+
+    assert(expectedArgumentOption === resultArgumentsOption)
+
+  }
+
 }

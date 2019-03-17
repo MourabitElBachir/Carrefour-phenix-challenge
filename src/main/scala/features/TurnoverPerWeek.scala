@@ -7,6 +7,7 @@ import models._
 
 object TurnoverPerWeek extends TurnoversComputation {
 
+  // Turnovers by shop generation
   def computePerShop(transactionsByDates: Stream[(LocalDate, Stream[Transaction])],
                      dayShopsTurnovers: Stream[TurnoversPerShop],
                      referencesStreams: Stream[(LocalDate, Stream[(UUID, Stream[Item])])]): Stream[TurnoversPerShop] = {

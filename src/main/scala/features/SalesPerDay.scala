@@ -5,6 +5,7 @@ import models._
 
 object SalesPerDay extends SalesComputation {
 
+  // Sales by shop generation
   def computePerShop(transactions: Stream[Transaction]): Stream[SalesPerShop] = {
 
     val shopsSales: Stream[SalesPerShop] = transactions
