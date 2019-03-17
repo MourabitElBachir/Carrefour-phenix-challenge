@@ -155,7 +155,7 @@ class TurnoversPerDayTest extends FunSuite {
       )
     )
 
-    val resultPrice = TurnoverPerDay.getItemPrice(755, UUID.fromString("5b4b6b81-5aa2-4ad8-8ba9-ae1a006e7d71"), referencesStreams)
+    val resultPrice = TurnoverPerDay.getItemPrice(600, UUID.fromString("5b4b6b81-cccc-4ad8-8ba9-ae1a006e7d71"), referencesStreams)
 
     assert(expectedPrice === resultPrice)
   }
