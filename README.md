@@ -40,10 +40,10 @@ Le programme permet d'avoir la traçabilité sur les données pendant l'éxecuti
 
 #### Modèles de données - Classes principales
 
-- Classe Transaction :
-- Classe Item :
-- Classe ItemSale :
-- Classe Turnover :
+- <b>Classe Transaction :</b> Permet de cooncrétiser une transaction (id de la transaction, date, reference magasin, id du produit, quantité)
+- <b>Classe Item : Permet de concrétiser un produit (id du produit, prix)
+- <b>Classe ItemSale :</b> C'est une classe pour concrétiser les lignes de sortie pour un calcul de vente (id produit, somme quantités)
+- <b>Classe Turnover :</b> C'est une classe pour concrétiser les lignes de sortie pour un calcul de chiffre d'affaire (id produit, chiffre d'affaire)
 
 
 #### Optimisation de la RAM
@@ -70,13 +70,13 @@ Le programme permet d'avoir la traçabilité sur les données pendant l'éxecuti
 sbt "run -i data -o output -d 20170514" 
 ```
 
+<b>-i:</b> option pour le chemin des données d'entrée
+<b>-o:</b> option pour le chemin des données de sortie 
+<b>-d:</b> date du jour
 
 ## 4- Utiliser le projet avec un JAR
 ```
 scala release/Carrefour-phenix-challenge-production.jar -i data -o output -d 20170514
 ```
-
-## 5- Cas d'ulisation du programme
-
 
 
