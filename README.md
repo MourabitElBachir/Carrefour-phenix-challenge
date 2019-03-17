@@ -31,16 +31,35 @@ Le résultat du programme sont les fichiers :
 - pas de backend (base de données, Hadoop, Spark, Kafka, etc.)
 - languages: Scala, Java, Bash, Go
 
+
 ## 2- Description de la solution
 
-## 3- Utiliser le projet avec SBT
+#### Programme
 
-### Prérequis
+Le programme permet d'avoir la traçabilité sur les données pendant l'éxecution. Si on a par exemple une transaction datée le 14/05/2017 avec juste des transactions relatives aux deux derniers jours, le programme va calculer la formule J7 sur ces jours en affichant à l'utilisateur que les autres transactions sont manquantes.
+
+#### Modèles de données - Classes principales
+
+- <b>Classe Transaction :</b> Permet de cooncrétiser une transaction (id de la transaction, date, reference magasin, id du produit, quantité)
+- <b>Classe Item :</b> Permet de concrétiser un produit (id du produit, prix)
+- <b>Classe ItemSale :</b> C'est une classe pour concrétiser les lignes de sortie pour un calcul de vente (id produit, somme quantités)
+- <b>Classe Turnover :</b> C'est une classe pour concrétiser les lignes de sortie pour un calcul de chiffre d'affaire (id produit, chiffre d'affaire)
+
+
+#### Optimisation de la RAM
+
+ <b>.jvmopts :</b> Un fichier permettant de spécifier une valeur maximale pour la consommation de la RAM. Pour ce projet c'est : 512 Mo. 
+ 
+ 
+### 3-Prérequis
 
  - Java 8 au minimum
  - Sbt version : 1.2.8
  - Scala version : 2.12.8
  
+
+## 4- Utiliser le projet avec SBT
+
 
 ### Lancer les tests
 ```
@@ -52,10 +71,13 @@ Le résultat du programme sont les fichiers :
 sbt "run -i data -o output -d 20170514" 
 ```
 
+<b>-i:</b> option pour le chemin des données d'entrée
+<b>-o:</b> option pour le chemin des données de sortie 
+<b>-d:</b> date du jour
 
-## 4- Utiliser le projet avec un JAR
+## 5- Utiliser le projet avec un JAR
 ```
-scala release/Carrefour-phenix-challenge-production.jar
+scala release/Carrefour-phenix-challenge-production.jar -i data -o output -d 20170514
 ```
 
 
