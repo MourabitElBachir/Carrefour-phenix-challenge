@@ -34,4 +34,14 @@ class ItemsTest extends FunSuite {
     assert(itemResult2 === None)
   }
 
+  test("Items with number of cells greater than required") {
+
+    val expected = Some(Item(10, 30.86))
+
+    val itemResult = Transaction
+      .parse("10|30.86|a|b|c|d|e")
+
+    assert(itemResult === expected)
+  }
+
 }
