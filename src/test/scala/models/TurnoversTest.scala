@@ -13,7 +13,7 @@ class TurnoversTest extends FunSuite {
 
     val result = turnover1.compare(turnover2)
 
-    assert(turnover1 === turnover2)
+    assert(expected === result)
   }
 
   test("Turnover toString method test") {
